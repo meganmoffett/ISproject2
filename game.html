@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riddle Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            color: #020081;
+        }
+
+        .riddle {
+            font-size: 1.3em;
+            margin: 20px 0;
+        }
+
+        .correct-answer {
+            font-size: 1em;
+            margin: 10px 0;
+            color: #008839;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #020081;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #0600c1;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .end-message {
+            font-size: 1.2em;
+            color: #ffffff;
+            margin-top: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #020081;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Riddle Game</h1>
+        <p class="riddle">Click "Start Game" to begin!</p>
+        <input type="text" id="user-answer" placeholder="Enter your answer here" style="display: none;">
+        <button id="submit" style="display: none;">Submit Answer</button>
+        <button id="start">Start Game</button>
+        <p class="correct-answer" id="correct-answer" style="display: none;"></p>
+        <p class="score" id="score">Score: 0 / 0</p>
+        <p class="end-message" id="end-message" style="display: none;"></p>
+        <a href="scratch.html">Back to Home</a>
+    </div>
+
+    <script>
+        const riddles = [
+            { question: "What has to be broken before you can use it?", answer: ["an egg", "egg"] },
+            { question: "I’m tall when I’m young, and I’m short when I’m old. What am I?", answer: ["a candle", "candle"] },
+            { question: "What has many keys but can’t open a single lock?", answer: ["a piano", "piano"] },
+            { question: "What can you keep after giving to someone?", answer: ["your word", "word", "promise"] },
+            { question: "What has one head, one foot, and four legs?", answer: ["a bed", "bed"] }
+        ];
+
+        const riddleText = document.querySelector('.riddle');
+        const answerInput = document.getElementById('user-answer');
+        const submitButton = document.getElementById('submit');
+        const startButton = document.getElementById('start');
+        const correctAnswerText = document.getElementById('correct-answer');
+        const scoreText = document.getElementById('score');
+        const endMessage = document.getElementById('end-message');
+
+        let currentRiddleIndex = 0;
+        let correctAnswerCount = 0;
+        let totalAttempts = 0;
+
+        function startGame() {
+            currentRiddleIndex = 0;
+            correctAnswerCount = 0;
+            totalAttempts = 0;
+            endMessage.style.display = 'none';
+            answerInput.value = '';
+            correctAnswerText.style.display = 'none';
+            scoreText.textContent = `Score: ${correctAnswerCount} / ${totalAttempts}`;
+            showNextRiddle();
+        }
+
+        function showNextRiddle() {
+            if (currentRiddleIndex < riddles.length) {
+                riddleText.textContent = riddles[currentRiddleIndex].question;
+                answerInput.style.display = 'block';
+                submitButton.style.display = 'inline-block';
+                startButton.style.display = 'none';
+                correctAnswerText.style.display = 'none';
+            } else {
+                endGame();
+            }
+        }
+
+        function checkAnswer() {
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            const correctAnswers = riddles[currentRiddleIndex].answer.map(ans => ans.toLowerCase());
+
+            if (correctAnswers.includes(userAnswer)) {
+                correctAnswerCount++;
+            }
+
+            totalAttempts++;
+            scoreText.textContent = `Score: ${correctAnswerCount} / ${totalAttempts}`;
+
+            correctAnswerText.style.display = 'block';
+            correctAnswerText.textContent = `Correct Answer: ${riddles[currentRiddleIndex].answer.join(", ")}`;
+
+            currentRiddleIndex++;
+            answerInput.value = '';
+
+            setTimeout(showNextRiddle, 2000);
+        }
+
+        function endGame() {
+            riddleText.textContent = "Game Over!";
+            answerInput.style.display = 'none';
+            submitButton.style.display = 'none';
+            startButton.style.display = 'inline-block';
+            endMessage.style.display = 'block';
+            endMessage.textContent = `You answered ${correctAnswerCount} out of ${totalAttempts} riddles correctly!`;
+        }
+
+        startButton.addEventListener('click', startGame);
+        submitButton.addEventListener('click', checkAnswer);
+    </script>
+</body>
+</html>

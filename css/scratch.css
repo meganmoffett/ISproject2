@@ -1,0 +1,48 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    color: darkmagenta;
+    background-color: rgba(181, 233, 254, 0.826);
+    font-weight: lighter;
+    font-size: large;
+}
+h4{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: magenta;
+    font-weight: bold;
+    text-align: center;
+    font-size: x-large;
+}
+h3{
+    text-decoration: underline;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: violet;
+    font-weight: 100;
+    text-align: center;
+}
+img{
+    padding: 3px;
+    border: rgb(14, 150, 96) dotted 5px;
+    margin: 1px;
+    text-align: center;
+}
+iframe{
+    padding: 3px;
+    border: rgb(39, 77, 248) dotted 5px;
+    margin: 1px;
+    text-align: center;
+}
+.content-block {
+    width: 90%;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+}
+.tableauPlaceholder {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    text-align: center;
+    height: 100%;
+    max-height: 861px;
+}
